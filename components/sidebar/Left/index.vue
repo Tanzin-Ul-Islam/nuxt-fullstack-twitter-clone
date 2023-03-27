@@ -7,17 +7,83 @@
         </div>
       </nuxt-link>
     </div>
-    <SidebarLeftTab>
-      
-    </SidebarLeftTab>
+    <div class="mt-3 space-y-4">
+      <SidebarLeftTab :active="true">
+        <template v-slot:icon>
+          <HomeIcon />
+        </template>
+        <template v-slot:name> Home </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <HashtagIcon />
+        </template>
+        <template v-slot:name> Explore </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <BellIcon />
+        </template>
+        <template v-slot:name>
+          Notifications
+        </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <InboxIcon />
+        </template>
+        <template v-slot:name>
+          Messages
+        </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <BookmarkIcon />
+        </template>
+        <template v-slot:name>
+          Bookmarks
+        </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <DocumentIcon />
+        </template>
+        <template v-slot:name>
+          Lists
+        </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <UserIcon />
+        </template>
+        <template v-slot:name>
+          Profile
+        </template>
+      </SidebarLeftTab>
+      <SidebarLeftTab>
+        <template v-slot:icon>
+          <EllipsisHorizontalCircleIcon />
+        </template>
+        <template v-slot:name>
+          More
+        </template>
+      </SidebarLeftTab>
+    </div>
   </div>
 </template>
 
 <script>
-import { HomeIcon  } from '@heroicons/vue/24/solid'
+import { HomeIcon, HashtagIcon, BellIcon, InboxIcon, BookmarkIcon, DocumentIcon, UserIcon, EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/solid";
 export default {
   components: {
-    HomeIcon ,
+    HomeIcon,
+    HashtagIcon,
+    BellIcon,
+    InboxIcon,
+    BookmarkIcon,
+    DocumentIcon,
+    UserIcon,
+    EllipsisHorizontalCircleIcon
   },
   setup() {
     const { defaultTransition } = useTailwindConfig();
