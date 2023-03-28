@@ -13,14 +13,14 @@
 
           <!-- main content -->
 
-          <main class="col-span-12 md:col-span-8 xl:col-span-6 bg-red-400">
-            asdf
+          <main class="col-span-12 md:col-span-8 xl:col-span-6 bg-blue-50">
+            <router-view></router-view>
           </main>
 
           <!-- right sidebar -->
-          <div class="hidden md:block xl:col-span-4 md:col-span-3 bg-blue-300">
+          <div class="hidden md:block xl:col-span-4 md:col-span-3 bg-blue-50">
             <div class="sticky top-0">
-              Right sidebar
+              <SidebarRight />
             </div>
           </div>
 
