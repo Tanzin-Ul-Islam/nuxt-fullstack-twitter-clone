@@ -16,8 +16,7 @@
 <script>
 export default {
     props: ['title', 'loading'],
-    setup(props) {
-        console.log(props);
+    setup(props) {s
         return {
             props
         }
