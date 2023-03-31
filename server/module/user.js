@@ -3,13 +3,25 @@ import { prisma } from "../db";
 class UserModule {
     createUser = async (userData) => {
         try {
-            //console.log(userData);
-            const result = await prisma.user.create({
+            const response = await prisma.user.create({
                 data: userData
             });
-            return result;
+            return response;
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    getUserByUserName = async (userName) => {
+        try {
+            const response = await prisma.user.findUnique({
+                where: {
+                    userName
+                }
+            })
+            return response;
+        } catch (error) {
+            return error;
         }
     }
 }

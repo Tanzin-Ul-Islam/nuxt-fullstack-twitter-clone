@@ -10,13 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  userName     String   @unique
+model User {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  userName     String         @unique
   name         String?
   email        String
   password     String
   profileImage String?
-  createAt     DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createAt     DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  refreshToken RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String   @unique
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id])
 }
