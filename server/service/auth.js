@@ -1,8 +1,9 @@
 import { sendError } from 'h3';
 import UserModule from '../module/user';
+import RefreshTokenModule from '../module/refreshToken';
 import bcrypt from 'bcrypt';
 import Transformer from "../transformer/transformer";
-import generateJwtTokens from '../utils/jwt';
+import {generateJwtTokens, sendRefreshToken} from '../utils/jwt';
 class Authorization {
     registration = async (event, req) => {
         const { userName, name, email, password } = req;
@@ -28,13 +29,15 @@ class Authorization {
             if (matchedPassword) {
                 const { jwtAccessToken, jwtRefreshToken } = generateJwtTokens(response);
                 const userData = Transformer.userTransformer(response);
+                console.log(userData.id);
+                await RefreshTokenModule.createRefreshToken({ token: jwtRefreshToken, userId: userData.id });
+                sendRefreshToken(event, jwtRefreshToken)
                 return {
                     accessToken: jwtAccessToken,
-                    refreshToken: jwtRefreshToken,
                     user: userData
                 }
             } else {
-                return sendError(event, createError({ statusCode: 401, statusMessage: 'Unauthorized' }));
+                return sendError(event, createError({ statusCode: 401, statusMessage: 'username or password is invalid!' }));
             }
         } else {
             return sendError(event, createError({ statusCode: 400, statusMessage: 'User not created.' }));

@@ -2,7 +2,7 @@
   <div :class="{ dark: darkMode }">
     <div class="bg-white dark:bg-dim-900">
       <div class="min-h-full">
-        <div class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-10">
+        <div v-if="user" class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-10">
           <!-- left sidebar -->
 
           <div class="hidden md:block xs-col-span-1 xl:col-span-2">
@@ -26,6 +26,8 @@
 
 
         </div>
+        <Auth v-else />
+
       </div>
     </div>
   </div>
@@ -33,11 +35,15 @@
 
 <script>
 import { ref } from "vue";
+import userAuth from "./composables/userAuth"
 export default {
   setup() {
+    const { useAuthUser } = userAuth();
+    const user = useAuthUser();
     const darkMode = ref(true);
     return {
       darkMode,
+      user
     };
   },
 };

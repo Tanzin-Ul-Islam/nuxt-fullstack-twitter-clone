@@ -1,0 +1,6 @@
+{
+    "auth": {
+        "login": "auth/login",
+        "registration":"auth/register"
+    }
+}
