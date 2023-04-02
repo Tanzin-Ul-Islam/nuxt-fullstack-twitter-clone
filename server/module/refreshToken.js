@@ -1,9 +1,25 @@
 import { prisma } from "../db";
 class RefreshTokenModule {
     createRefreshToken = async (payload) => {
-        await prisma.refreshToken.create({
-            data: payload
-        })
+        try {
+            await prisma.refreshToken.create({
+                data: payload
+            });
+        } catch (error) {
+            return error;
+        }
+    }
+    getRefreshToken = async (token) => {
+        try {
+            const response = await prisma.refreshToken.findUnique({
+                where: {
+                    token
+                }
+            });
+            return response;
+        } catch (error) {
+            return error;
+        }
     }
 }
 export default new RefreshTokenModule

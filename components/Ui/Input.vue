@@ -10,7 +10,6 @@
 <script>
 export default {
     props: ['label', 'type', 'modelValue', 'placeholder'],
-    emits: ['update:modelValue'],
     setup(props) {
         return {
             props,

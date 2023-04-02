@@ -1,6 +1,8 @@
 {
     "auth": {
         "login": "auth/login",
-        "registration":"auth/register"
+        "registration":"auth/register",
+        "refreshToken":"auth/refresh-token",
+        "user":"auth/user"
     }
 }

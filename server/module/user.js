@@ -24,6 +24,18 @@ class UserModule {
             return error;
         }
     }
+    getUserByUserId = async (userId) => {
+        try {
+            const response = await prisma.user.findUnique({
+                where: {
+                    id: userId
+                }
+            })
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export default new UserModule 

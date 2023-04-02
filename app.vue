@@ -1,7 +1,10 @@
 <template>
   <div :class="{ dark: darkMode }">
     <div class="bg-white dark:bg-dim-900">
-      <div class="min-h-full">
+      <div v-if="authLoading">
+        <Loader/>
+      </div>
+      <div v-else class="min-h-full">
         <div v-if="user" class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-10">
           <!-- left sidebar -->
 
@@ -27,7 +30,6 @@
 
         </div>
         <Auth v-else />
-
       </div>
     </div>
   </div>
@@ -38,12 +40,19 @@ import { ref } from "vue";
 import userAuth from "./composables/userAuth"
 export default {
   setup() {
-    const { useAuthUser } = userAuth();
+    const { useAuthUser, initAuth, useAuthToken, useAuthLoading } = userAuth();
     const user = useAuthUser();
+    const token = useAuthToken();
+    const authLoading = useAuthLoading();
     const darkMode = ref(true);
+    onBeforeMount(async () => {
+      await initAuth();
+    })
     return {
       darkMode,
-      user
+      user,
+      token,
+      authLoading
     };
   },
 };

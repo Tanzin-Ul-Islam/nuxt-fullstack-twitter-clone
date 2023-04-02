@@ -2,13 +2,22 @@ import jwt from "jsonwebtoken";
 
 const config = useRuntimeConfig();
 
-function generateJwtAccessToken(user) {
-    let token = jwt.sign({ userId: user.id }, config.jwtAccessSecret, { expiresIn: '20min' });
+export function generateJwtAccessToken(user) {
+    const token = jwt.sign({ userId: user.id }, config.jwtAccessSecret, { expiresIn: '20min' });
     return token;
 }
 function generateJwtRefreshToken(user) {
-    let token = jwt.sign({ userId: user.id }, config.jwtRefreshSecret, { expiresIn: '4h' });
+    const token = jwt.sign({ userId: user.id }, config.jwtRefreshSecret, { expiresIn: '4h' });
     return token;
+}
+
+export function decodeJwtAccessToken(token) {
+    const response = jwt.verify(token, config.jwtAccessSecret);
+    return response;
+}
+export function decodeJwtRefreshToken(token) {
+    const response = jwt.verify(token, config.jwtRefreshSecret);
+    return response;
 }
 
 export function generateJwtTokens(user) {

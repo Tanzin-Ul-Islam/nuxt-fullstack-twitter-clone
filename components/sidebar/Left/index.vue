@@ -74,6 +74,7 @@
 
 <script>
 import { HomeIcon, HashtagIcon, BellIcon, InboxIcon, BookmarkIcon, DocumentIcon, UserIcon, EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/solid";
+import useTailwindConfig from "~~/composables/useTailwindConfig";
 export default {
   components: {
     HomeIcon,

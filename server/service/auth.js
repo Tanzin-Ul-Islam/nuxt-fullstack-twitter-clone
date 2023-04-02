@@ -3,7 +3,7 @@ import UserModule from '../module/user';
 import RefreshTokenModule from '../module/refreshToken';
 import bcrypt from 'bcrypt';
 import Transformer from "../transformer/transformer";
-import {generateJwtTokens, sendRefreshToken} from '../utils/jwt';
+import { generateJwtAccessToken, generateJwtTokens, sendRefreshToken, decodeJwtRefreshToken } from '../utils/jwt';
 class Authorization {
     registration = async (event, req) => {
         const { userName, name, email, password } = req;
@@ -29,7 +29,6 @@ class Authorization {
             if (matchedPassword) {
                 const { jwtAccessToken, jwtRefreshToken } = generateJwtTokens(response);
                 const userData = Transformer.userTransformer(response);
-                console.log(userData.id);
                 await RefreshTokenModule.createRefreshToken({ token: jwtRefreshToken, userId: userData.id });
                 sendRefreshToken(event, jwtRefreshToken)
                 return {
@@ -42,6 +41,17 @@ class Authorization {
         } else {
             return sendError(event, createError({ statusCode: 400, statusMessage: 'User not created.' }));
         }
+    }
+
+    getAccessTokenByRefreshToken = async (event, refreshToken) => {
+        const rToken = await RefreshTokenModule.getRefreshToken(refreshToken);
+        if (!rToken) {
+            return;
+        }
+        const decodedToken = decodeJwtRefreshToken(refreshToken);
+        const user = await UserModule.getUserByUserId(decodedToken.userId);
+        const accessToken = generateJwtAccessToken(user);
+        return accessToken;
     }
 }
 
