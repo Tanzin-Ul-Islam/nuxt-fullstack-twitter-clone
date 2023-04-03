@@ -5,6 +5,7 @@ import UserModule from "../module/user";
 export default defineEventHandler(async (event) => {
     const endpoints = [
         "/api/auth/user",
+        "/api/tweets",
     ]
     const isHandledByThisMiddleware = endpoints.some((endpoint) => {
         const pattern = new UrlPattern(endpoint);
