@@ -4,5 +4,8 @@
         "registration":"auth/register",
         "refreshToken":"auth/refresh-token",
         "user":"auth/user"
+    },
+    "tweets":{
+        "post":"tweets"
     }
 }

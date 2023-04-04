@@ -1,6 +1,5 @@
 <template>
     <div class="w-full max-w-xs">
-
         <form @submit.prevent="handleLogin">
             <div class="mb-4">
                 <UiInput :label="'User Name'" :type="'text'" v-model="formValue.name" :placeholder="'@name'" />

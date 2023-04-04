@@ -7,7 +7,7 @@
             <UiSpinner />
         </div>
         <div v-else>
-            {{user}}
+            <TweetForm :user="user" @onSubmit="handleFormSubmit" />
         </div>
         <slot></slot>
     </div>
@@ -15,14 +15,20 @@
 
 <script>
 import userAuth from '~~/composables/userAuth';
+import useTweet from '~~/composables/useTweet';
 export default {
     props: ['title', 'loading'],
     setup(props) {
         const { useAuthUser } = userAuth();
+        const { postTweet } = useTweet()
         const user = useAuthUser();
+        function handleFormSubmit(data) {
+            postTweet(data);
+        }
         return {
             props,
             user,
+            handleFormSubmit
         }
     }
 }
