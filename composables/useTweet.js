@@ -8,6 +8,9 @@ export default () => {
         try {
             let formData = new FormData();
             formData.append('text', payload.text);
+            payload.mediaFiles.map((file, index)=>{
+                formData.append('media_filte_'+index, file);
+            })
             const { data, pending, error, refresh } = await useFetch(config.BASEURL + api.tweets.post, {
                 method: 'POST',
                 body: formData,

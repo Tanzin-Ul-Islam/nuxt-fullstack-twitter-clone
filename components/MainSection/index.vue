@@ -23,7 +23,10 @@ export default {
         const { postTweet } = useTweet()
         const user = useAuthUser();
         function handleFormSubmit(data) {
-            postTweet(data);
+            postTweet({
+                text:data.text,
+                mediaFiles: data.mediaFiles
+            });
         }
         return {
             props,
