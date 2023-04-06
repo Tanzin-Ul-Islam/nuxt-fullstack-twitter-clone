@@ -3,7 +3,7 @@
         <div class="sticky top-0 px-3 py-4 bg-white/80 backdrop-blur-md">
             <h2 class="text-xl font-bold text-gray-800">{{ props.title }}</h2>
         </div>
-        <div v-if="props.loading" class="flex justify-center items-center p-4 border-b">
+        <div v-if="loading" class="flex justify-center items-center p-4 border-b">
             <UiSpinner />
         </div>
         <div v-else>
@@ -22,15 +22,25 @@ export default {
         const { useAuthUser } = userAuth();
         const { postTweet } = useTweet()
         const user = useAuthUser();
-        function handleFormSubmit(data) {
-            postTweet({
-                text:data.text,
-                mediaFiles: data.mediaFiles
-            });
+        let loading = ref(props.loading);
+        async function handleFormSubmit(data) {
+            try {
+                const { showLoading, ...formData } = data;
+                loading.value = showLoading
+                await postTweet({
+                    text: formData.text,
+                    mediaFiles: formData.mediaFiles
+                });
+            }catch(error){
+                console.log(error);
+            }finally{
+                loading.value = false;
+            }
         }
         return {
             props,
             user,
+            loading,
             handleFormSubmit
         }
     }
