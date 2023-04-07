@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="ml-auto pr-4">
-                    <UiButtonTweet>Tweet</UiButtonTweet>
+                    <UiButtonTweet :type="'submit'" :isDisabled="isDisabled">Tweet</UiButtonTweet>
                 </div>
             </div>
 
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 export default {
     props: ['user'],
     emits: ['onSubmit'],
@@ -102,12 +102,23 @@ export default {
         let selectedImage = ref("");
         let previewImage = ref("");
 
+        const isDisabled = computed(() => {
+            if (!tweet.value) {
+                return true;
+            } else if (!selectedImage.value) {
+                return true;
+            }
+            return false;
+        })
+
         function handleFormSubmit() {
-            emit('onSubmit', {
-                text: tweet.value,
-                mediaFiles: [selectedImage.value],
-                showLoading: true,
-            });
+            if (validation()) {
+                emit('onSubmit', {
+                    text: tweet.value,
+                    mediaFiles: [selectedImage.value],
+                    showLoading: true,
+                });
+            }
         }
         function handleImageClick() {
             postImageInput.value.click();
@@ -126,6 +137,7 @@ export default {
             tweet,
             postImageInput,
             previewImage,
+            isDisabled,
             handleFormSubmit,
             handleImageClick,
             handleImageUpload,

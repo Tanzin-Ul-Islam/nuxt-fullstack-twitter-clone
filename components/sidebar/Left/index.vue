@@ -7,7 +7,7 @@
         </div>
       </nuxt-link>
     </div>
-    <div class="mt-3 space-y-4">
+    <div class="mt-3 space-y-2">
       <SidebarLeftTab :active="true">
         <template v-slot:icon>
           <HomeIcon />
@@ -68,6 +68,16 @@
           More
         </template>
       </SidebarLeftTab>
+      <div class="pl-3 hidden xl:block">
+        <UiButtonTweet :type="'button'">Tweet</UiButtonTweet>
+      </div>
+      <div class="pl-3 block xl:hidden">
+        <UiButtonTweet :type="'button'">
+          <div class="w-6 h-6 font-bold">
+            @
+          </div>
+        </UiButtonTweet>
+      </div>
     </div>
   </div>
 </template>
@@ -84,7 +94,7 @@ export default {
     BookmarkIcon,
     DocumentIcon,
     UserIcon,
-    EllipsisHorizontalCircleIcon
+    EllipsisHorizontalCircleIcon,  
   },
   setup() {
     const { defaultTransition } = useTailwindConfig();

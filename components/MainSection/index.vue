@@ -26,7 +26,7 @@ export default {
         async function handleFormSubmit(data) {
             try {
                 const { showLoading, ...formData } = data;
-                loading.value = showLoading
+                loading.value = showLoading;
                 await postTweet({
                     text: formData.text,
                     mediaFiles: formData.mediaFiles
