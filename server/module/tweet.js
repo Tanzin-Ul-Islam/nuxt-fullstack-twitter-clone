@@ -6,6 +6,12 @@ class TweetModule {
         })
         return response;
     }
+    getTweets = async (payload = {}) => {
+        const response = prisma.tweet.findMany({
+            ...payload
+        });
+        return response;
+    }
 }
 
 export default new TweetModule;

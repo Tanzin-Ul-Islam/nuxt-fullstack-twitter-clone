@@ -105,20 +105,17 @@ export default {
         const isDisabled = computed(() => {
             if (!tweet.value) {
                 return true;
-            } else if (!selectedImage.value) {
-                return true;
             }
             return false;
         })
 
         function handleFormSubmit() {
-            if (validation()) {
-                emit('onSubmit', {
-                    text: tweet.value,
-                    mediaFiles: [selectedImage.value],
-                    showLoading: true,
-                });
-            }
+            emit('onSubmit', {
+                text: tweet.value,
+                mediaFiles: [selectedImage.value],
+                showLoading: true,
+            });
+
         }
         function handleImageClick() {
             postImageInput.value.click();

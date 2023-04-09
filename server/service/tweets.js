@@ -2,6 +2,8 @@ import TweetModule from "../module/tweet";
 import MediaFilesModule from "../module/mediaFiles";
 import formidable from "formidable";
 import { uploadToCloudinary } from "../utils/cloudinary";
+import Transformer from '../transformer/transformer';
+
 class TweetService {
     handleCreateTweet = async (event) => {
         try {
@@ -20,6 +22,11 @@ class TweetService {
                 authorId: user.id,
                 text: fields.text,
             };
+            // reply to
+            const replyTo = fields.replyTo;
+            if(replyTo && replyTo !== null){
+                tweetData.replyToId = replyTo;
+            }
             const tweet = await TweetModule.createTweet(tweetData);
             const mediaFiles = await Promise.all(
                 Object.keys(files).map(async el => {
@@ -39,6 +46,29 @@ class TweetService {
         } catch (error) {
             return
         }
+    }
+
+    getTweets = async (event) => {
+        const response = await TweetModule.getTweets({
+            include: {
+                author: true,
+                mediaFile: true,
+                replies: {
+                    include:{
+                        author: true
+                    }
+                },
+                replyTo: {
+                    include:{
+                        author: true
+                    }
+                }
+            }
+        });
+        const filteredResponse = response.map(el=>{
+            return Transformer.tweetTransformer(el);
+        })
+        return filteredResponse
     }
 }
 
