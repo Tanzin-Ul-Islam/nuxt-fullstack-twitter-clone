@@ -2,7 +2,8 @@ import human from 'human-time';
 class Transformer {
     userTransformer(data) {
         const { password, ...transformedData } = data;
-        return transformedData
+        transformedData.handle = "@" + data.userName;
+        return transformedData;
     }
     tweetTransformer(data) {
         const transformedData = {

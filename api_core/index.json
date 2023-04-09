@@ -6,6 +6,6 @@
         "user":"auth/user"
     },
     "tweets":{
-        "post":"tweets"
+        "requestUrl":"tweets"
     }
 }

@@ -8,10 +8,10 @@ export default () => {
         try {
             let formData = new FormData();
             formData.append('text', payload.text);
-            payload.mediaFiles.map((file, index)=>{
-                formData.append('media_filte_'+index, file);
+            payload.mediaFiles.map((file, index) => {
+                formData.append('media_filte_' + index, file);
             })
-            const { data, pending, error, refresh } = await useFetch(config.BASEURL + api.tweets.post, {
+            const { data, pending, error, refresh } = await useFetch(config.BASEURL + api.tweets.requestUrl, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -22,7 +22,22 @@ export default () => {
             return
         }
     }
+    async function getTweet() {
+        try {
+            const { data } = await useFetch(config.BASEURL + api.tweets.requestUrl, {
+                method: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + token.value
+                }
+            });
+            const { tweets } = data.value;
+            return tweets;
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return {
-        postTweet
+        postTweet,
+        getTweet
     }
 }

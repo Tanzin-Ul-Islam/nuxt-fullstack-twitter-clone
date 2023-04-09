@@ -7,7 +7,12 @@
             <UiSpinner />
         </div>
         <div v-else>
-            <TweetForm :user="user" @onSubmit="handleFormSubmit" />
+            <div class="border-b">
+                <TweetForm :user="user" @onSubmit="handleFormSubmit" />
+            </div>
+        </div>
+        <div class="border-b">
+            <TweetFeed :tweetList="tweetList" />
         </div>
         <slot></slot>
     </div>
@@ -16,12 +21,14 @@
 <script>
 import userAuth from '~~/composables/userAuth';
 import useTweet from '~~/composables/useTweet';
+import { ref, onBeforeMount, onMounted } from 'vue';
 export default {
     props: ['title', 'loading'],
     setup(props) {
         const { useAuthUser } = userAuth();
-        const { postTweet } = useTweet()
+        const { postTweet, getTweet } = useTweet();
         const user = useAuthUser();
+        const tweetList = ref([]);
         let loading = ref(props.loading);
         async function handleFormSubmit(data) {
             try {
@@ -31,16 +38,26 @@ export default {
                     text: formData.text,
                     mediaFiles: formData.mediaFiles
                 });
-            }catch(error){
+                await getTweetData();
+            } catch (error) {
                 console.log(error);
-            }finally{
+            } finally {
                 loading.value = false;
             }
         }
+        async function getTweetData(){
+            tweetList.value = await getTweet();
+        }
+
+        onBeforeMount(async () => {
+            await getTweetData();
+        })
+
         return {
             props,
             user,
             loading,
+            tweetList,
             handleFormSubmit
         }
     }

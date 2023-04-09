@@ -3,7 +3,9 @@ import { MainSection } from '~~/.nuxt/components';
 
 <template>
     <MainSection :title="'Home'" :loading="loading">
-
+        <Head>
+            <title>Home/Twitter</title>
+        </Head>
     </MainSection>
 </template>
 <script>
