@@ -8,6 +8,9 @@
             <div v-for="(image, index) in item.mediaFiles" :key="index" class="flex my-3 mr-2 border-2 rounded-2xl">
                 <img :src="image.url" :alt="image.url" class="w-full rounded-2xl">
             </div>
+            <div class="mt-2">
+                action button
+            </div>
         </div>
     </div>
 </template>
