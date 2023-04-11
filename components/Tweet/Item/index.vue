@@ -9,7 +9,7 @@
                 <img :src="image.url" :alt="image.url" class="w-full rounded-2xl">
             </div>
             <div class="mt-2">
-                action button
+                <TweetItemActions/>
             </div>
         </div>
     </div>
