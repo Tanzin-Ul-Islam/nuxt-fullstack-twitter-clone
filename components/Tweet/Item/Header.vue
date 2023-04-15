@@ -9,7 +9,7 @@
             <br />
             <p v-if="tweet.replyTo" class="pl-3 font-semibold text-sm">
                 <span class="text-gray-700">Replying to </span>
-                <nuxt-link to="#" class="text-blue-400">{{ tweet.replyTo.author.handle }}</nuxt-link>
+                <nuxt-link :to="`/status/${tweet.replyTo.id}`" class="text-blue-400">{{ tweet.replyTo.author.handle }}</nuxt-link>
             </p>
         </div>
     </div>

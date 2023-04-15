@@ -8,7 +8,8 @@
                 <div class="w-full p-2">
                     <textarea id="message" rows="2"
                         class="block w-full h-15 p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Write your thoughts here..." v-model="tweet"></textarea>
+                        :placeholder="props.placeholder ? props.placeholder : 'Write your thoughts here...'"
+                        v-model="tweet"></textarea>
                 </div>
             </div>
             <div class="p-2 pl-[4.2rem]">
@@ -93,7 +94,7 @@
 <script>
 import { ref, computed } from 'vue';
 export default {
-    props: ['user'],
+    props: ['user', 'placeholder'],
     emits: ['onSubmit'],
     setup(props, { emit }) {
         const user = ref(props.user);
@@ -130,6 +131,7 @@ export default {
             reader.readAsDataURL(file);
         }
         return {
+            props,
             user,
             tweet,
             postImageInput,

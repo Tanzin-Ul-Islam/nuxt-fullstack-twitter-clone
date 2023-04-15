@@ -36,8 +36,23 @@ export default () => {
             console.log(error);
         }
     }
+    async function getTweetById(id) {
+        try {
+            const { data } = await useFetch(config.BASEURL + api.tweets.requestUrl + '/' + id, {
+                method: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + token.value
+                }
+            });
+            const { tweet } = data.value;
+            return tweet;
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return {
         postTweet,
-        getTweet
+        getTweet,
+        getTweetById
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TweetItemHeader :tweet="item"/>
+        <TweetItemHeader :tweet="item" />
         <div class="ml-16">
             <p class="flex-shrink w-auto font-medium text-gray-900">
                 {{ item.text }}
@@ -9,14 +9,14 @@
                 <img :src="image.url" :alt="image.url" class="w-full rounded-2xl">
             </div>
             <div class="mt-2">
-                <TweetItemActions/>
+                <TweetItemActions />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 export default {
     props: ["tweet"],
     setup(props) {

@@ -24,7 +24,7 @@ class TweetService {
             };
             // reply to
             const replyTo = fields.replyTo;
-            if(replyTo && replyTo !== null){
+            if (replyTo && replyTo !== null) {
                 tweetData.replyToId = replyTo;
             }
             const tweet = await TweetModule.createTweet(tweetData);
@@ -54,21 +54,47 @@ class TweetService {
                 author: true,
                 mediaFile: true,
                 replies: {
-                    include:{
+                    include: {
                         author: true
                     }
                 },
                 replyTo: {
-                    include:{
+                    include: {
                         author: true
                     }
                 }
             }
         });
-        const filteredResponse = response.map(el=>{
+        const filteredResponse = response.map(el => {
             return Transformer.tweetTransformer(el);
         })
         return filteredResponse
+    }
+
+    getTweetById = async (event) => {
+        const { id } = event.context.params;
+        const response = await TweetModule.getTweetById(id, {
+            include: {
+                author: true,
+                mediaFile: true,
+                replyTo: {
+                    include: {
+                        author: true,
+                    }
+                },
+                replies: {
+                    include: {
+                        author: true,
+                        replyTo: {
+                            include: {
+                                author: true,
+                            }
+                        }
+                    },
+                }
+            }
+        });
+        return Transformer.tweetTransformer(response);
     }
 }
 
