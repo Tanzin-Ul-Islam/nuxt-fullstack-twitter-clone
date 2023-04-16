@@ -85,6 +85,7 @@ class TweetService {
                 replies: {
                     include: {
                         author: true,
+                        mediaFile: true,
                         replyTo: {
                             include: {
                                 author: true,

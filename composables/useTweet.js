@@ -8,6 +8,9 @@ export default () => {
         try {
             let formData = new FormData();
             formData.append('text', payload.text);
+            if (payload.replyTo) {
+                formData.append('replyTo', payload.replyTo);
+            }
             payload.mediaFiles.map((file, index) => {
                 formData.append('media_filte_' + index, file);
             })

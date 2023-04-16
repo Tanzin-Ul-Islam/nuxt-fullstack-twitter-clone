@@ -21,5 +21,17 @@ class RefreshTokenModule {
             return error;
         }
     }
+    deleteRefreshToken = async (token) => {
+        try {
+            const response = await prisma.refreshToken.delete({
+                where: {
+                    token: token
+                }
+            });
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 export default new RefreshTokenModule

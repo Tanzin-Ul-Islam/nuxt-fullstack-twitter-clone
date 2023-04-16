@@ -53,6 +53,11 @@ class Authorization {
         const accessToken = generateJwtAccessToken(user);
         return accessToken;
     }
+
+    logout = async (token) => {
+        const response = RefreshTokenModule.deleteRefreshToken(token);
+        return response;
+    }
 }
 
 export default new Authorization

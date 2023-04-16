@@ -4,33 +4,52 @@
     </div>
     <div v-else>
         <TweetItem v-if="Object.keys(tweet).length > 0" :tweet="tweet" />
-        <TweetForm :user="user" @onSubmit="handleFormSubmit" :placeholder="'tweet your reply.'" />
-        <TweetFeed :tweetList="replies" :notFoundMsg="'Ooops! No tweet found..'" :title="'Replies'"/>
+        <TweetForm v-if="Object.keys(tweet).length > 0" :user="user" @onSubmit="handleFormSubmit"
+            :placeholder="'tweet your reply.'" :replyTo="replyTo" />
+        <TweetFeed :tweetList="replies" :notFoundMsg="'Ooops! No tweet found..'" :title="'Replies'" :compact="true" />
     </div>
 </template>
 <script>
-import { ref, watchEffect, watch } from 'vue';
-import _ from "lodash";
+import { ref, watch } from 'vue';
 export default {
     props: ['tweet', 'user', 'isLoading'],
-    setup(props) {
+    emits: ['onSuccess'],
+    setup(props, { emit }) {
         const tweet = ref({});
+        const { postTweet } = useTweet();
         const user = ref(props.user);
+        const replies = ref([]);
+        const replyTo = ref("");
         const isLoading = ref(props.isLoading);
-        const replies = computed(() => (props.tweet?.replies ? props.tweet.replies : []))
-        function handleFormSubmit() {
-
+        async function handleFormSubmit(data) {
+            try {
+                const { showLoading, ...formData } = data;
+                const response = await postTweet({
+                    text: formData.text,
+                    replyTo: formData.replyTo,
+                    mediaFiles: formData.mediaFiles
+                });
+                emit('onSuccess', { response: response, success: true });
+            } catch (error) {
+                console.log(error);
+            } finally {
+                loading.value = false;
+            }
         }
         watch(props, (newVal, oldVal) => {
             tweet.value = newVal.tweet;
+            replyTo.value = tweet.value.id;
+            replies.value = tweet.value?.replies;
             isLoading.value = newVal.isLoading;
         })
         return {
+            props,
             tweet,
             user,
             handleFormSubmit,
             isLoading,
-            replies
+            replies,
+            replyTo
         }
     }
 }

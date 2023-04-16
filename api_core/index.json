@@ -3,7 +3,8 @@
         "login": "auth/login",
         "registration":"auth/register",
         "refreshToken":"auth/refresh-token",
-        "user":"auth/user"
+        "user":"auth/user",
+        "logout":"auth/logout"
     },
     "tweets":{
         "requestUrl":"tweets"

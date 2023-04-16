@@ -110,12 +110,26 @@ export default () => {
         }
     }
 
+    async function logout() {
+        try {
+            await axios.post(config.BASEURL + api.auth.logout).then(response => {
+                setToken(null);
+                setUser(null);
+            }).catch(error => {
+                console.log(error)
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         login,
         useAuthToken,
         useAuthUser,
         useAuthLoading,
-        initAuth
+        initAuth,
+        logout
     }
 
 }

@@ -60,10 +60,7 @@ export default {
                         userName: formValue.name,
                         password: formValue.password
                     }
-                    await login(formatData).then(response=>{
-                        console.log('res',response);
-                    })
-
+                    await login(formatData);
                 }
             } catch (error) {
                 console.log(error)

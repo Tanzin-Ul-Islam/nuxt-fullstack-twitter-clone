@@ -11,7 +11,7 @@
     </div>
     <div v-else class="pb-4 border-b hover:bg-blue-100 cursor-pointer" v-for="(data, index) in props.tweetList"
         :key="index">
-        <TweetItem :tweet="data" />
+        <TweetItem :tweet="data" :compact="props.compact" />
     </div>
     <!-- <ul>
         <li >{{data.text}}</li>
@@ -20,7 +20,7 @@
 <script>
 import { ref, computed } from 'vue';
 export default {
-    props: ['tweetList', 'notFoundMsg', 'title'],
+    props: ['tweetList', 'notFoundMsg', 'title', 'compact'],
     setup(props) {
         const emptyTweet = computed(() => (props.tweetList.length === 0));
         return {

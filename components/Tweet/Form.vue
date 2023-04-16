@@ -94,7 +94,7 @@
 <script>
 import { ref, computed } from 'vue';
 export default {
-    props: ['user', 'placeholder'],
+    props: ['user', 'placeholder', 'replyTo'],
     emits: ['onSubmit'],
     setup(props, { emit }) {
         const user = ref(props.user);
@@ -113,6 +113,7 @@ export default {
         function handleFormSubmit() {
             emit('onSubmit', {
                 text: tweet.value,
+                ...(props.replyTo && { replyTo: props.replyTo }),
                 mediaFiles: [selectedImage.value],
                 showLoading: true,
             });

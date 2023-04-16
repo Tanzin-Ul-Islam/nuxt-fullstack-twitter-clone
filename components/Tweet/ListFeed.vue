@@ -11,7 +11,7 @@
         <div v-if="tweetLoading" class="flex justify-center items-center p-4 border-b">
             <UiSpinner />
         </div>
-        <TweetFeed v-else :tweetList="tweetList" />
+        <TweetFeed v-else :tweetList="tweetList" :compact="true"/>
     </div>
 </template>
 
