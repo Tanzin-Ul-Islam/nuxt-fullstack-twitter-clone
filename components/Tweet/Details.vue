@@ -6,7 +6,7 @@
         <TweetItem v-if="Object.keys(tweet).length > 0" :tweet="tweet" />
         <TweetForm v-if="Object.keys(tweet).length > 0" :user="user" @onSubmit="handleFormSubmit"
             :placeholder="'tweet your reply.'" :replyTo="replyTo" />
-        <TweetFeed :tweetList="replies" :notFoundMsg="'Ooops! No tweet found..'" :title="'Replies'" :compact="true" />
+        <TweetFeed :tweetList="replies" :notFoundMsg="'No replies found..'" :title="'Replies'" :compact="true" />
     </div>
 </template>
 <script>

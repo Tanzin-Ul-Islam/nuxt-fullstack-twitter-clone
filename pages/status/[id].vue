@@ -1,6 +1,5 @@
 <template>
     <MainSection :title="'Home'">
-
         <Head>
             <title>Home/Twitter/Status</title>
         </Head>
@@ -39,17 +38,20 @@ export default {
             await getTweetData();
         })
 
-        const handleRouteUpdate = () => {
-            console.log(route.fullPath)
-        }
+        onBeforeRouteUpdate(async (to, from, next) => {
+            id = to.params.id;
+            await getTweetData()
+            next();
+        })
 
-        onBeforeRouteUpdate(handleRouteUpdate)
+
 
         return {
             isLoading,
             tweet,
             user,
-            handleSuccess
+            handleSuccess,
+            route,
         }
     }
 }
